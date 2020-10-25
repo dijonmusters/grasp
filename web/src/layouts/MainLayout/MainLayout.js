@@ -1,4 +1,5 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from '@redwoodjs/auth'
 import styled, { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
@@ -48,6 +49,8 @@ const StyledLink = styled(Link)`
 `
 
 const MainLayout = ({ children }) => {
+  const { logIn, isAuthenticated, logOut } = useAuth()
+
   return (
     <>
       <GlobalStyle />
@@ -57,6 +60,15 @@ const MainLayout = ({ children }) => {
           <Subtitle>a learning experience.</Subtitle>
         </Header>
       </StyledLink>
+      {isAuthenticated ? (
+        <a href="#" onClick={logOut}>
+          Logout
+        </a>
+      ) : (
+        <a href="#" onClick={logIn}>
+          Login
+        </a>
+      )}
       <main>{children}</main>
     </>
   )
